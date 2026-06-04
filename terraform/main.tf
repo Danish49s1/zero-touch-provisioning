@@ -59,7 +59,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = file("C:/Users/Dell/.ssh/id_ed25519.pub")
+    public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIGN9ykAlKrKtMuuDqfREJPMZA/l2AmohwALe5xV5Hb dell@DESKTOP-F248V42"
   }
 
   os_disk {
