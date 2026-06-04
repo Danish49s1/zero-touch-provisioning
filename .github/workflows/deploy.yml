@@ -2,6 +2,11 @@ name: Zero Touch Provisioning
 
 on:
   push:
+
+
+permissions:
+  id-token: write
+  contents: read
     branches:
       - main
 
