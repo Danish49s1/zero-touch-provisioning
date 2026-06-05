@@ -118,7 +118,7 @@ Production-Ready Task Management Application
 ## Screenshots
 
 ### 1. Terraform Infrastructure as Code
-![Terraform Configuration](screenshots/IAC-Terraform.png)
+![Terraform](screenshots/iac-terraform.png)
 
 ### 2. Terraform Apply Success
 ![Terraform Apply Success](screenshots/Terraform%20Success.png)
