@@ -1,37 +1,108 @@
 ---
-- name: Zero Touch Server Setup
+- name: Zero Touch Multi-Tier Deployment
   hosts: webservers
   become: yes
 
   tasks:
 
-    - name: Update apt packages
+    # System Update
+    - name: Update packages
       apt:
         update_cache: yes
 
+    # MySQL Install
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Start MySQL
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    # MySQL Setup
+    - name: Install Python MySQL lib
+      apt:
+        name: python3-pymysql
+        state: present
+
+    - name: Create database
+      mysql_db:
+        name: taskdb
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Create DB user
+      mysql_user:
+        name: taskuser
+        password: "Task@1234"
+        priv: "taskdb.*:ALL"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    # Node.js Install
+    - name: Install Node.js
+      shell: |
+        curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+        apt-get install -y nodejs
+
+    # App Deploy
+    - name: Create app directory
+      file:
+        path: /var/www/taskapp
+        state: directory
+
+    - name: Copy app files
+      copy:
+        src: ../app/
+        dest: /var/www/taskapp/
+
+    - name: Install npm packages
+      shell: npm install
+      args:
+        chdir: /var/www/taskapp
+
+    # PM2 — App ko background mein chalao
+    - name: Install PM2
+      shell: npm install -g pm2
+
+    - name: Start app with PM2
+      shell: pm2 start server.js --name taskapp || pm2 restart taskapp
+      args:
+        chdir: /var/www/taskapp
+
+    # Nginx Install + Configure
     - name: Install Nginx
       apt:
         name: nginx
         state: present
 
-    - name: Install Docker
-      apt:
-        name: docker.io
-        state: present
+    - name: Configure Nginx reverse proxy
+      copy:
+        content: |
+          server {
+            listen 80;
+            location / {
+              proxy_pass http://localhost:3000;
+              proxy_set_header Host $host;
+            }
+          }
+        dest: /etc/nginx/sites-available/taskapp
 
-    - name: Start Nginx
+    - name: Enable site
+      file:
+        src: /etc/nginx/sites-available/taskapp
+        dest: /etc/nginx/sites-enabled/taskapp
+        state: link
+
+    - name: Remove default site
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Restart Nginx
       service:
         name: nginx
-        state: started
-        enabled: yes
-
-    - name: Start Docker
-      service:
-        name: docker
-        state: started
-        enabled: yes
-
-    - name: Deploy index page
-      copy:
-        content: "<h1>Zero Touch Provisioning Works!</h1>"
-        dest: /var/www/html/index.html
+        state: restarted

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Manager — Zero Touch Deployment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: Arial, sans-serif; 
+      background: #f0f2f5;
+      padding: 40px 20px;
+    }
+    .container { 
+      max-width: 600px; 
+      margin: 0 auto; 
+    }
+    h1 { 
+      color: #0078d4;  /* Azure blue */
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .input-row { 
+      display: flex; 
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    input { 
+      flex: 1; 
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus { border-color: #0078d4; }
+    button.add { 
+      padding: 12px 24px;
+      background: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    button.add:hover { background: #005a9e; }
+    .task { 
+      background: white;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .task span { color: #333; font-size: 15px; }
+    .task small { color: #999; font-size: 12px; display: block; }
+    button.del { 
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .badge {
+      display: inline-block;
+      background: #e8f4fd;
+      color: #0078d4;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Task Manager</h1>
+    <p class="subtitle">Deployed via Zero-Touch Provisioning on Azure</p>
+    <div class="badge">⚡ Automated with Terraform + Ansible + GitHub Actions</div>
+
+    <div class="input-row">
+      <input type="text" id="taskInput" 
+             placeholder="New task likhoo..." />
+      <button class="add" onclick="addTask()">Add Task</button>
+    </div>
+
+    <div id="taskList"></div>
+  </div>
+
+  <script>
+    const API = 'http://' + window.location.hostname + ':3000';
+
+    async function loadTasks() {
+      const res = await fetch(API + '/tasks');
+      const tasks = await res.json();
+      const list = document.getElementById('taskList');
+      list.innerHTML = tasks.map(t => `
+        <div class="task">
+          <div>
+            <span>${t.title}</span>
+            <small>${new Date(t.created_at).toLocaleString()}</small>
+          </div>
+          <button class="del" onclick="deleteTask(${t.id})">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    async function addTask() {
+      const input = document.getElementById('taskInput');
+      if (!input.value.trim()) return;
+      await fetch(API + '/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: input.value })
+      });
+      input.value = '';
+      loadTasks();
+    }
+
+    async function deleteTask(id) {
+      await fetch(API + '/tasks/' + id, { method: 'DELETE' });
+      loadTasks();
+    }
+
+    // Enter key support
+    document.getElementById('taskInput')
+      .addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTask();
+    });
+
+    loadTasks();
+  </script>
+</body>
+</html>
