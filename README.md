@@ -117,40 +117,41 @@ Production-Ready Task Management Application
 
 ## Screenshots
 
-## Screenshots
+### 1. Terraform Infrastructure as Code
+![Terraform Configuration](screenshots/IAC-Terraform.png)
 
-### GitHub Repository
-![GitHub Repository](screenshots/github-repository.png)
+### 2. Terraform Apply Success
+![Terraform Apply Success](screenshots/Terraform%20Success.png)
 
-### Terraform Provisioning
-![Terraform](screenshots/terraform-success.png)
+### 3. Azure Resource Group Resources
+![Azure Resources](screenshots/Azure-infrastructure-resources.png)
 
-### Azure Infrastructure Resources
-![Azure Resources](screenshots/azure-infrastructure-resources.png)
+### 4. Azure Virtual Machine
+![Azure VM](screenshots/Virtual%20Machines.png)
 
-### Virtual Machine
-![VM](screenshots/virtual-machines.png)
+### 5. Network Security Group Rules
+![Networking Rules](screenshots/Networking%20Rules.png)
 
-### Networking Rules
-![Networking](screenshots/networking-rules.png)
+### 6. GitHub Actions CI/CD Pipeline
+![GitHub Actions](screenshots/GitHub%20Actions%20Successs.png)
 
-### Ansible Deployment
-![Ansible](screenshots/ansible-deployment-success.png)
+### 7. Ansible Automated Deployment
+![Ansible Deployment](screenshots/Ansible%20Deployment%20Success.png)
 
-### Nginx Service
-![Nginx](screenshots/nginx-service-running.png)
+### 8. Nginx Reverse Proxy Service
+![Nginx Service](screenshots/nginx-service-running.png)
 
-### PM2 Process Manager
-![PM2](screenshots/pm2-api-verification.png)
+### 9. PM2 Process Management
+![PM2 Verification](screenshots/PM2-api-verification.png)
 
-### API Response
+### 10. API Endpoint Verification
+![API Verification](screenshots/api-data-retrieval.png)
+
+### 11. API Response Validation
 ![API Response](screenshots/api-response-working.png)
 
-### Database Data Retrieval
-![Data Retrieval](screenshots/api-data-retrieval.png)
-
-### Final Application UI
-![Task Manager](screenshots/task-manager-ui.png)
+### 12. Running Task Manager Application
+![Task Manager UI](screenshots/Task-Manager-UI(1).png)
 ---
 
 ## DevOps Skills Demonstrated
