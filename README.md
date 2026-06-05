@@ -151,7 +151,7 @@ Production-Ready Task Management Application
 ![API Response](screenshots/api-response-working.png)
 
 ### 12. Running Task Manager Application
-![Task Manager UI](screenshots/Task-Manager-UI(1).png)
+![Task Manager UI](screenshots/Task-Manager-UI.png)
 ---
 
 ## DevOps Skills Demonstrated
