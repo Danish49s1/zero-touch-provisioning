@@ -117,18 +117,40 @@ Production-Ready Task Management Application
 
 ## Screenshots
 
-### Application Deployment
+## Screenshots
 
-![Application Running](screenshots/app.png)
+### GitHub Repository
+![GitHub Repository](screenshots/github-repository.png)
 
-### CI/CD Pipeline Execution
+### Terraform Provisioning
+![Terraform](screenshots/terraform-success.png)
 
-![GitHub Actions Pipeline](screenshots/pipeline.png)
+### Azure Infrastructure Resources
+![Azure Resources](screenshots/azure-infrastructure-resources.png)
 
-### Azure Infrastructure
+### Virtual Machine
+![VM](screenshots/virtual-machines.png)
 
-![Azure Virtual Machine](screenshots/azure-vm.png)
+### Networking Rules
+![Networking](screenshots/networking-rules.png)
 
+### Ansible Deployment
+![Ansible](screenshots/ansible-deployment-success.png)
+
+### Nginx Service
+![Nginx](screenshots/nginx-service-running.png)
+
+### PM2 Process Manager
+![PM2](screenshots/pm2-api-verification.png)
+
+### API Response
+![API Response](screenshots/api-response-working.png)
+
+### Database Data Retrieval
+![Data Retrieval](screenshots/api-data-retrieval.png)
+
+### Final Application UI
+![Task Manager](screenshots/task-manager-ui.png)
 ---
 
 ## DevOps Skills Demonstrated
